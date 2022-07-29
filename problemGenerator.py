@@ -94,7 +94,6 @@ if __name__ == '__main__':
                 file_type, comment_token = f.readline().split()
         
         questions = get_latest_problem()
-        print(questions)
         for question, question_num in questions.items():
                 question_num += file_type
                 commented_out_question = ""
