@@ -32,14 +32,15 @@ class Solution:
                 if n == 1:
                         return nums
                 
-                low = 0
+                low = -1
                 high = n-1
-                current = 1
+                current = 0
                 
                 while current <= high:
                         if mappings[nums[current]] < PIVOT:
-                                nums[current], nums[low] = nums[low], nums[current]
                                 low += 1
+                                nums[current], nums[low] = nums[low], nums[current]
+                                current += 1
                         
                         elif mappings[nums[current]] > PIVOT:
                                 nums[current], nums[high] = nums[high], nums[current]
