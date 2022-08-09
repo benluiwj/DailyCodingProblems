@@ -54,26 +54,7 @@ def binary_search(target, nums):
     
     start_index = start
     
-    
-    start = 0
-    end = n - 1
-    end_index = -1
-    
-    while start <= end:
-        mid = start + (end - start) // 2
-        
-        if nums[mid] == target:
-            end_index = mid
-            start = mid + 1
-        
-        elif nums[mid] > target:
-            end = mid - 1
-        
-        else:
-            start = mid + 1
-    
-    end_index = end
-    return start_index, end_index
+    return start_index
 
 
 class Solution:
@@ -85,7 +66,7 @@ class Solution:
         result = []
         
         for num in nums:
-            index, _ = binary_search(num, ascending_nums)
+            index = binary_search(num, ascending_nums)
             ascending_nums.pop(index)
             result.append(index)
         
@@ -98,5 +79,5 @@ sol = Solution()
 # assert sol.countSmaller([-1]) == [0]
 # assert sol.countSmaller([0,0]) == [0,0]
 # assert sol.countSmaller([3, 4, 9, 6, 1]) == [1, 1, 2, 1, 0]
-# assert sol.countSmaller([3, 2, 5, 6, 1]) == [2, 1, 1, 1, 0]
-assert sol.countSmaller([1,1,1,1,1,0]) == [1,1,1,1,1,0]
+assert sol.countSmaller([3, 2, 5, 6, 1]) == [2, 1, 1, 1, 0]
+assert sol.countSmaller([1,1,1,0]) == [1,1,1,0]
