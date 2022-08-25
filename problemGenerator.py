@@ -105,5 +105,7 @@ if __name__ == '__main__':
                                 commented_out_question += comment_token + ' ' + line
                 with open(question_num, 'w') as f:
                         f.write(commented_out_question)
+                        if file_type == ".py":
+                                f.write("from typing import * \n")
                 
                 print(f"{question_num} successfully generated!")
