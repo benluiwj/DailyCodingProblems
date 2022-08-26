@@ -22,47 +22,83 @@ perform dfs, collect all the transformations and return the list containing the 
 """
 class Solution:
     def findLadders(self, beginWord: str, endWord: str, wordList: List[str]) -> List[List[str]]:
+        visited = set()
         dictionary = set(wordList)
         if endWord not in dictionary:
             return []
         
-        visited = set()
-        shortest = [float('inf')]
         lowercase = string.ascii_lowercase
-        
-        paths = dict()
-        paths[float('inf')] = []
-        
-        def helper(current_ladder):
-            n = len(current_ladder)
-            m = len(beginWord)
-            if current_ladder[-1] == endWord and n<= shortest[0]:
-                if n not in paths:
-                    paths[n] = [current_ladder[::]]
-                else:
-                    paths[n].append(current_ladder[::])
-                
-                shortest[0] = min(shortest[0], n)
-                return
+        frontier = [[beginWord]]
+        n = len(beginWord)
+        result = []
+        while frontier:
+            new_frontier = []
+            for path in frontier:
+                duplicate = path.copy()
+                last_word = duplicate[-1]
+                visited.add(last_word)
+                if last_word == endWord:
+                    result.append(duplicate)
+                    continue
+                for i in range(n):
+                    prefix = last_word[:i]
+                    suffix = last_word[i+1:]
+                    
+                    for char in lowercase:
+                        new_word = prefix + char + suffix
+                        if new_word in dictionary and new_word not in visited:
+
+                            
+                            new_frontier.append(duplicate + [new_word])
             
-            last_word = current_ladder[-1]
-            for i in range(m):
-                prefix = last_word[:i]
-                suffix = last_word[i+1:]
-                for char in lowercase:
-                    new_word = prefix + char + suffix
-                    if new_word in dictionary  and new_word not in visited:
-                        current_ladder.append(new_word)
-                        visited.add(new_word)
-                        helper(current_ladder)
-                        current_ladder.pop()
-                        visited.remove(new_word)
+            if result:
+                return result
             
-            return
+            frontier = new_frontier
+        
+        return []
+                    
+        # dictionary = set(wordList)
+        # if endWord not in dictionary:
+        #     return []
+        
+        # visited = set()
+        # shortest = [float('inf')]
+        # lowercase = string.ascii_lowercase
+        
+        # paths = dict()
+        # paths[float('inf')] = []
+        
+        # def helper(current_ladder):
+        #     n = len(current_ladder)
+        #     m = len(beginWord)
+        #     if current_ladder[-1] == endWord and n<= shortest[0]:
+        #         if n not in paths:
+        #             paths[n] = [current_ladder[::]]
+        #         else:
+        #             paths[n].append(current_ladder[::])
+                
+        #         shortest[0] = min(shortest[0], n)
+        #         return
+            
+        #     last_word = current_ladder[-1]
+        #     for i in range(m):
+        #         prefix = last_word[:i]
+        #         suffix = last_word[i+1:]
+        #         for char in lowercase:
+        #             new_word = prefix + char + suffix
+        #             if new_word in dictionary  and new_word not in visited:
+        #                 current_ladder.append(new_word)
+        #                 visited.add(new_word)
+        #                 helper(current_ladder)
+        #                 current_ladder.pop()
+        #                 visited.remove(new_word)
+            
+        #     return
                 
         
-        helper([beginWord])
-        return paths[shortest[0]]
+        # helper([beginWord])
+        # return paths[shortest[0]]
             
 
 sol = Solution()
